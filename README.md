@@ -33,6 +33,8 @@ Once installed, the extension will automatically provide syntax highlighting for
 
 - `.asm`
 - `.s`
+- `.S`
+- `.nasm`
 
 If you're working with a file that has a different extension but contains x86/x64 assembly code, you can manually set the language mode:
 

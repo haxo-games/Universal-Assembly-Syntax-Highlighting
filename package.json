@@ -1,8 +1,8 @@
 {
   "name": "x86-assembly-syntax",
-  "displayName": "x86-x64 Assembly Syntax",
-  "description": "Syntax highlighting for x86 and x64 assembly with Intel syntax",
-  "version": "1.0.1",
+  "displayName": "x86-x64 Assembly Syntax Highlighting",
+  "description": "Syntax highlighting extension for x86 and x64 assembly for Intel syntax",
+  "version": "1.0.2",
   "engines": {
     "vscode": "^1.60.0"
   },
