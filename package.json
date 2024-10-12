@@ -1,0 +1,25 @@
+{
+  "name": "x86-x64-syntax-highlighting",
+  "displayName": "x86-x64 Syntax Highlighting",
+  "description": "This is an x86-64 Assembly Syntax Highlighter",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "asm",
+      "aliases": ["assembly", "asm"],
+      "extensions": [".s",".asm"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "asm",
+      "scopeName": "",
+      "path": "./syntaxes/asm.tmLanguage.json"
+    }]
+  }
+}
