@@ -1,8 +1,8 @@
 {
   "name": "x86-assembly-syntax",
-  "displayName": "x86/x64 Assembly Syntax",
-  "description": "Syntax highlighting for x86/x64 assembly with Intel syntax",
-  "version": "0.0.2",
+  "displayName": "x86-x64 Assembly Syntax",
+  "description": "Syntax highlighting for x86 and x64 assembly with Intel syntax",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -12,8 +12,8 @@
   "contributes": {
     "languages": [{
       "id": "x86asm",
-      "aliases": ["x86/x64 Assembly", "x86asm"],
-      "extensions": [".asm", ".s", ".S"],
+      "aliases": ["x86-x64 Assembly", "x86/x64 Assembly", "x86/x64", "x86-x64", "x86asm"],
+      "extensions": [".asm", ".s", ".S", ".nasm"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
@@ -32,6 +32,12 @@
     "url": "https://github.com/haxo-games/x86-x64-syntax-highlighting/issues"
   },
   "keywords": [
+    "x86-x64 Assembly", 
+    "x86/x64 Assembly", 
+    "x86/x64", 
+    "x86-x64", 
+    "x86asm",
+    "asm",
     "assembly",
     "x86",
     "x64",
