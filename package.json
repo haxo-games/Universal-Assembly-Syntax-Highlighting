@@ -13,7 +13,7 @@
     "languages": [{
       "id": "x86asm",
       "aliases": ["x86/x64 Assembly", "x86asm"],
-      "extensions": [".asm",".s"],
+      "extensions": [".asm", ".s", ".S"],
       "configuration": "./language-configuration.json"
     }],
     "grammars": [{
@@ -26,5 +26,18 @@
     "type": "git",
     "url": "https://github.com/haxo-games/x86-x64-syntax-highlighting.git"
   },
-  "publisher": "YourPublisherName"
+  "publisher": "HaxoGames",
+  "icon": "images/icon.png",
+  "bugs": {
+    "url": "https://github.com/haxo-games/x86-x64-syntax-highlighting/issues"
+  },
+  "keywords": [
+    "assembly",
+    "x86",
+    "x64",
+    "intel",
+    "syntax",
+    "highlighting"
+  ],
+  "homepage": "https://github.com/haxo-games/x86-x64-syntax-highlighting#readme"
 }
