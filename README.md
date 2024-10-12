@@ -1,65 +1,90 @@
-# x86-x64-syntax-highlighting README
+# VS Code x86/x64 Assembly Syntax Highlighting Extension
 
-This is the README for your extension "x86-x64-syntax-highlighting". After writing up a brief description, we recommend including the following sections.
+## Overview
+
+This Visual Studio Code extension provides comprehensive syntax highlighting for x86 and x64 assembly language using Intel syntax. It's designed to improve readability and understanding of assembly code, including compiler-generated output.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Syntax highlighting for x86 and x64 assembly instructions
+- Support for Intel syntax
+- Highlighting of registers, memory operands, and numeric constants
+- Recognition of common assembler directives
+- Proper highlighting of labels and function names
+- Support for compiler-generated assembly features (e.g., CFI directives)
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Open Visual Studio Code
+2. Go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X on macOS)
+3. Search for "x86/x64 Assembly Syntax Highlighting"
+4. Click Install
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Alternatively, you can download the VSIX file from the releases page and install it manually:
 
-## Requirements
+1. Download the `.vsix` file
+2. In VS Code, go to the Extensions view
+3. Click on the "..." at the top of the Extensions view
+4. Choose "Install from VSIX..." and select the downloaded file
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Usage
 
-## Extension Settings
+Once installed, the extension will automatically provide syntax highlighting for files with the following extensions:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+- `.asm`
+- `.s`
+
+If you're working with a file that has a different extension but contains x86/x64 assembly code, you can manually set the language mode:
+
+1. Click on the language indicator in the bottom-right corner of VS Code
+2. Select "x86/x64 Assembly" from the list of languages
+
+## Highlighted Elements
+
+This extension provides syntax highlighting for:
+
+- Instructions (e.g., `mov`, `push`, `call`)
+- Registers (e.g., `eax`, `rbp`, `r15`)
+- Memory operands (e.g., `DWORD PTR`, `QWORD PTR`)
+- Numeric constants (decimal and hexadecimal)
+- Labels and function names
+- Assembler directives (e.g., `.section`, `.globl`)
+- CFI directives (e.g., `.cfi_startproc`, `.cfi_endproc`)
+- Comments (lines starting with `;`)
+
+## Customization
+
+You can customize the colors used for syntax highlighting by modifying your VS Code color theme. Add or modify entries in your `settings.json` file under `"editor.tokenColorCustomizations"`.
 
 For example:
 
-This extension contributes the following settings:
+```json
+"editor.tokenColorCustomizations": {
+    "textMateRules": [
+        {
+            "scope": "keyword.control.instruction.x86asm",
+            "settings": {
+                "foreground": "#C678DD"
+            }
+        },
+        {
+            "scope": "variable.language.register.x86asm",
+            "settings": {
+                "foreground": "#E06C75"
+            }
+        }
+    ]
+}
+```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Contributing
 
-## Known Issues
+If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the GitHub repository.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## License
 
-## Release Notes
+This extension is released under the MIT License. See the LICENSE file for details.
 
-Users appreciate release notes as you update your extension.
+## Acknowledgements
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Thanks to all contributors and users who have provided feedback and suggestions to improve this extension.
