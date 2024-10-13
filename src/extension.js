@@ -18,12 +18,11 @@ function activate(context) {
                         return new vscode.Hover(instructionInfo);
                     }
                 } else {
-                    // Only show hover for recognized mnemonics
-                    return undefined; // Return undefined if not a valid mnemonic
+                    return undefined;
                 }
             }
 
-            return undefined; // Return undefined if no word found
+            return undefined;
         }
     });
 
@@ -83,7 +82,7 @@ async function fetchInstructionInfo(instruction) {
 
 async function findDefinition(word) {
     // Get all x86 assembly files in the workspace
-    const files = await vscode.workspace.findFiles('**/*.s', '**/*.asm', '**/*.nasm', '**/*.S', "**/*.asmx", "**/*.inc");
+    const files = await vscode.workspace.findFiles('**/*.s', '**/node_modules/**');
 
     for (const file of files) {
         const document = await vscode.workspace.openTextDocument(file);
