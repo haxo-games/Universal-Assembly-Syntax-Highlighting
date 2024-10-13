@@ -50,7 +50,7 @@
             "patterns": [
                 {
                     "name": "variable.language.register.x86asm",
-                    "match": "\\b(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl)\\b"
+                    "match": "\\b(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl|cr[0-4]|dr[0-7]|tr[3-6]|cs|ds|ss|es|fs|gs)\\b"
                 }
             ]
         },
@@ -58,7 +58,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.instruction.x86asm",
-                    "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|add|sub|mul|div|and|or|xor|lea|cmp|test|inc|dec|shl|shr|nop|enter)\\b"
+                    "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|add|sub|mul|div|and|or|xor|lea|cmp|test|inc|dec|shl|shr|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr)\\b"
                 }
             ]
         },
@@ -66,7 +66,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.directive.x86asm",
-                    "match": "\\.(file|intel_syntax|section|text|data|bss|rdata|rodata|globl|local|comm|lcomm|def|scl|type|size|align|ascii|asciz|byte|word|long|quad|space|equ|set|cfi_startproc|cfi_endproc|cfi_def_cfa|cfi_def_cfa_register|cfi_adjust_cfa_offset|cfi_offset|cfi_escape|cfi_restore|ident)\\b"
+                    "match": "\\.(file|intel_syntax|section|text|data|bss|rdata|rodata|globl|local|comm|lcomm|def|scl|type|size|align|ascii|asciz|byte|word|long|quad|space|equ|set|previous|zero|weak|tbss|tcomm|cfi_startproc|cfi_endproc|cfi_def_cfa|cfi_def_cfa_register|cfi_adjust_cfa_offset|cfi_offset|cfi_escape|cfi_restore|ident)\\b"
                 },
                 {
                     "name": "keyword.control.directive.option.x86asm",
@@ -90,7 +90,7 @@
             "patterns": [
                 {
                     "name": "entity.name.section.x86asm",
-                    "match": "\\.(text|data|bss|rdata|rodata|comment)\\b"
+                    "match": "\\.(text|data|bss|rdata|rodata|comment|tbss|init|fini|note|debug)\\b"
                 }
             ]
         },
@@ -119,6 +119,10 @@
                 {
                     "name": "storage.type.memory.x86asm",
                     "match": "\\b(TBYTE|TWORD|DQWORD|OWORD|FWORD)\\b"
+                },
+                {
+                    "name": "storage.type.memory.x86asm",
+                    "match": "\\[([a-zA-Z0-9_+\\-*]+)\\]"
                 }
             ]
         }

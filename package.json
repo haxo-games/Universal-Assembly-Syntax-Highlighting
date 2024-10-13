@@ -2,7 +2,7 @@
   "name": "x86-assembly-syntax",
   "displayName": "x86-x64 Assembly Syntax Highlighting",
   "description": "Syntax highlighting extension for x86 and x64 assembly for Intel syntax",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "engines": {
     "vscode": "^1.60.0"
   },
