@@ -50,7 +50,7 @@ This extension provides syntax highlighting for:
 - Memory operands (e.g., `DWORD PTR`, `QWORD PTR`)
 - Numeric constants (decimal and hexadecimal)
 - Labels and function names
-- Assembler directives (e.g., `.section`, `.globl`)
+- Assembler directives (e.g., `.section`, `.global`)
 - CFI directives (e.g., `.cfi_startproc`, `.cfi_endproc`)
 - Comments (lines starting with `;`)
 
