@@ -68,11 +68,11 @@ async function fetchInstructionInfo(instruction) {
         return hoverContent;
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            // Handle 404 error specifically
-            return undefined; // or return null based on your preference
+            console.warn(`Instruction info not found for: ${instruction}`);
+        } else {
+            console.error(`Failed to fetch instruction info: ${error.message}`);
         }
-        console.error(`Failed to fetch instruction info: ${error.message}`);
-        return undefined; // Handle other errors if necessary
+        return null; // Return null if fetching fails
     }
 }
 
@@ -89,17 +89,65 @@ function findDefinition(document, word) {
     }
 
     // Look for label
-    const labelRegex = new RegExp(`^(${word}|FLAT:${word}):`, 'i');
+    const labelRegex = new RegExp(`^${word}:`, 'i');
     for (let i = 0; i < lines.length; i++) {
         if (labelRegex.test(lines[i])) {
             return new vscode.Location(document.uri, new vscode.Position(i, 0));
         }
     }
 
-    // Look for lcomm directive
-    const lcommRegex = new RegExp(`\\.lcomm\\s+${word}`, 'i');
+    // Look for extern declarations
+    const externRegex = new RegExp(`^extern\\s+${word}\\s*`, 'i');
     for (let i = 0; i < lines.length; i++) {
-        if (lcommRegex.test(lines[i])) {
+        if (externRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for global declarations
+    const globalRegex = new RegExp(`^global\\s+${word}\\s*`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (globalRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for struct definitions
+    const structRegex = new RegExp(`^\\s*struc\\s+${word}\\s*`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (structRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for section declarations
+    const sectionRegex = new RegExp(`^section\\s+${word}\\s*`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (sectionRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for macro definitions
+    const macroRegex = new RegExp(`^\\s*%define\\s+${word}\\s*`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (macroRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for equates
+    const equateRegex = new RegExp(`\\bequ\\s+${word}\\s*`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (equateRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for data declarations (db, dw, dd)
+    const dataRegex = new RegExp(`\\b${word}\\s+`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (dataRegex.test(lines[i])) {
             return new vscode.Location(document.uri, new vscode.Position(i, 0));
         }
     }

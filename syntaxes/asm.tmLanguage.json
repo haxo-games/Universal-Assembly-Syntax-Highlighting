@@ -90,11 +90,11 @@
         },
         {
           "name": "keyword.control.directive.extern.x86asm",
-          "match": "\\.extern\\b"
+          "match": "\\bextern\\b"
         },
         {
           "name": "keyword.control.directive.global.x86asm",
-          "match": "\\.global\\b"
+          "match": "\\bglobal\\b"
         },
         {
           "name": "keyword.control.directive.weak.x86asm",
@@ -111,6 +111,14 @@
         {
           "name": "keyword.control.directive.internal.x86asm",
           "match": "\\.internal\\b"
+        },
+        {
+          "name": "keyword.control.directive.default.x86asm",
+          "match": "\\bdefault\\b"
+        },
+        {
+          "name": "keyword.control.directive.rel.x86asm",
+          "match": "\\brel\\b"
         }
       ]
     },

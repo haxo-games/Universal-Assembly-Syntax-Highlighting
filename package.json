@@ -68,9 +68,11 @@
     "highlighting"
   ],
   "homepage": "https://github.com/haxo-games/x86-x64-syntax-highlighting#readme",
-  "devDependencies": {
+  "dependencies": {
     "axios": "^1.7.7",
-    "cheerio": "^1.0.0",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
     "vscode": "^1.1.34"
   }
 }
