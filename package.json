@@ -11,8 +11,8 @@
   ],
   "main": "./src/extension.js",
   "activationEvents": [
-    "onLanguage:x86asm" 
-],
+    "onLanguage:x86asm"
+  ],
   "contributes": {
     "languages": [
       {

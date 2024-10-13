@@ -46,7 +46,7 @@
         },
         {
           "name": "keyword.control.directive.x86asm",
-          "match": "\\.(file|section|text|data|bss|tbss|tcomm|comm|cfi_[a-zA-Z_]+|gcc_except_table|ctors|ascii|lcomm|byte|ident|align|rdata|rodata|comment|tbss|init|fini|note|debug|intel_syntax)\\b"
+          "match": "\\.(file|cfi_[a-zA-Z_]+|gcc_except_table|ctors|ascii|lcomm|byte|ident|align|rdata|rodata|comment|tbss|init|fini|note|debug|intel_syntax)\\b"
         },
         {
           "name": "keyword.control.directive.offset.x86asm",
@@ -142,7 +142,7 @@
       "patterns": [
         {
           "name": "entity.name.section.x86asm",
-          "match": "\\.(text|data|bss|rdata|rodata|comment|tbss|init|fini|note|debug|cfi_[a-zA-Z_]+)\\b"
+          "match": "\\.(section .(text|data|bss|tbss|tcomm))\\b"
         }
       ]
     },
