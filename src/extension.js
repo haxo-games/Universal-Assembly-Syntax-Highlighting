@@ -1,37 +1,41 @@
 const vscode = require('vscode');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const list = require('./mnemonics.js');
 
 function activate(context) {
-    // Existing hover provider
+    // Hover provider for mnemonics
     const hoverProvider = vscode.languages.registerHoverProvider('x86asm', {
         async provideHover(document, position, token) {
             const range = document.getWordRangeAtPosition(position, /\b[a-zA-Z0-9_]+\b/);
             const word = document.getText(range);
 
             if (word) {
-                const instructionInfo = await fetchInstructionInfo(word.toLowerCase());
-                if (instructionInfo) {
-                    return new vscode.Hover(instructionInfo);
-                } else if (isLabel(document, word)) {
-                    return new vscode.Hover(`Label: ${word}`);
-                } 
+                // Check if the word is a valid mnemonic
+                if (list.x86x64Mnemonics.includes(word.toUpperCase())) {
+                    const instructionInfo = await fetchInstructionInfo(word.toLowerCase());
+                    if (instructionInfo) {
+                        return new vscode.Hover(instructionInfo);
+                    }
+                } else {
+                    return new vscode.Hover(`Unrecognized mnemonic: ${word}`);
+                }
             }
 
             return undefined;
         }
     });
 
-    // New definition provider (Ctrl+Click to jump)
+    // Definition provider (Ctrl+Click to jump)
     const definitionProvider = vscode.languages.registerDefinitionProvider('x86asm', {
-        provideDefinition(document, position, token) {
+        async provideDefinition(document, position, token) {
             const range = document.getWordRangeAtPosition(position);
             if (!range) {
                 return;
             }
 
             const word = document.getText(range);
-            return findDefinition(document, word);
+            return await findDefinition(word);
         }
     });
 
@@ -76,79 +80,19 @@ async function fetchInstructionInfo(instruction) {
     }
 }
 
-function findDefinition(document, word) {
-    const text = document.getText();
-    const lines = text.split('\n');
+async function findDefinition(word) {
+    // Get all x86 assembly files in the workspace
+    const files = await vscode.workspace.findFiles('**/*.s', '**/node_modules/**');
 
-    // Look for .def directive
-    const defRegex = new RegExp(`\\.def\\s+${word}\\s*;`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (defRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
+    for (const file of files) {
+        const document = await vscode.workspace.openTextDocument(file);
+        const text = document.getText();
+        const lines = text.split('\n');
 
-    // Look for label
-    const labelRegex = new RegExp(`^${word}:`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (labelRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for extern declarations
-    const externRegex = new RegExp(`^extern\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (externRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for global declarations
-    const globalRegex = new RegExp(`^global\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (globalRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for struct definitions
-    const structRegex = new RegExp(`^\\s*struc\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (structRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for section declarations
-    const sectionRegex = new RegExp(`^section\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (sectionRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for macro definitions
-    const macroRegex = new RegExp(`^\\s*%define\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (macroRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for equates
-    const equateRegex = new RegExp(`\\bequ\\s+${word}\\s*`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (equateRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
-        }
-    }
-
-    // Look for data declarations (db, dw, dd)
-    const dataRegex = new RegExp(`\\b${word}\\s+`, 'i');
-    for (let i = 0; i < lines.length; i++) {
-        if (dataRegex.test(lines[i])) {
-            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        // Check for definitions in each file
+        const location = searchForDefinition(lines, word, document);
+        if (location) {
+            return location;
         }
     }
 
@@ -156,11 +100,18 @@ function findDefinition(document, word) {
     return undefined;
 }
 
-// Helper function to check if a word is a label in the document
-function isLabel(document, word) {
-    const text = document.getText();
+function searchForDefinition(lines, word, document) {
+    const externRegex = new RegExp(`^extern\\s+${word}\\s*`, 'i');
+    const globalRegex = new RegExp(`^global\\s+${word}\\s*`, 'i');
     const labelRegex = new RegExp(`^${word}:`, 'i');
-    return labelRegex.test(text);
+
+    for (let i = 0; i < lines.length; i++) {
+        if (externRegex.test(lines[i]) || globalRegex.test(lines[i]) || labelRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    return undefined; // If no match is found
 }
 
 function deactivate() {}
