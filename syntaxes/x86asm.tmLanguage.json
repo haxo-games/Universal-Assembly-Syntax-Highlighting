@@ -1,185 +1,180 @@
 {
-    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-    "name": "x86/x64/ARM Assembly",
-    "patterns": [
-      { "include": "#comments" },
-      { "include": "#strings" },
-      { "include": "#constants" },
-      { "include": "#registers" },
-      { "include": "#instructions" },
-      { "include": "#directives" },
-      { "include": "#labels" },
-      { "include": "#sections" },
-      { "include": "#symbols" },
-      { "include": "#functions" },
-      { "include": "#memory_operands" },
-      { "include": "#jsdoc_comments" }
-    ],
-    "repository": {
-      "comments": {
-        "patterns": [
-          {
-            "name": "comment.line.semicolon.x86asm",
-            "match": ";.*$"
-          },
-          {
-            "name": "comment.block.x86asm",
-            "begin": "/\\*",
-            "end": "\\*/"
-          }
-        ]
-      },
-      "jsdoc_comments": {
-        "patterns": [
-          {
-            "name": "comment.block.documentation.x86asm",
-            "begin": "/\\*\\*",
-            "end": "\\*/",
-            "patterns": [
-              {
-                "name": "entity.name.tag.jsdoc.x86asm",
-                "match": "@\\w+"
-              },
-              {
-                "name": "entity.name.type.jsdoc.x86asm",
-                "match": "\\{\\s*\\w+\\s*\\}"
-              }
-            ]
-          }
-        ]
-      },
-      "directives": {
-        "patterns": [
-          {
-            "name": "keyword.control.directive.define.x86asm",
-            "match": "%define\\b"
-          },
-          {
-            "name": "keyword.control.directive.assign.x86asm",
-            "match": "%assign\\b"
-          },
-          {
-            "name": "keyword.control.directive.equ.x86asm",
-            "match": "\\bequ\\b"
-          },
-          {
-            "name": "keyword.control.directive.x86asm",
-            "match": "\\.(file|section|text|data|bss|tbss|tcomm|comm)\\b"
-          },
-          {
-            "name": "keyword.control.directive.att.x86asm",
-            "match": "\\.(file|section|text|data|bss|rodata|comment|tbss|init|fini|note|debug)\\b"
-          },
-          {
-            "name": "keyword.control.directive.arm.x86asm",
-            "match": "\\.(file|section|text|data|bss|rodata|comment|tbss|init|fini|note|debug|thumb|thumb_func|code|code16|arm|arm_func)\\b"
-          }
-        ]
-      },
-      "labels": {
-        "patterns": [
-          {
-            "name": "entity.name.function.label.x86asm",
-            "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
-          },
-          {
-            "name": "entity.name.tag.label.x86asm",
-            "match": "^L[a-zA-Z0-9_]+:"
-          },
-          {
-            "name": "entity.name.function.label.att.x86asm",
-            "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
-          },
-          {
-            "name": "entity.name.function.label.arm.x86asm",
-            "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
-          }
-        ]
-      },
-      "sections": {
-        "patterns": [
-          {
-            "name": "entity.name.section.x86asm",
-            "match": "\\.(text|data|bss|rdata|rodata|comment|tbss|init|fini|note|debug)\\b"
-          },
-          {
-            "name": "entity.name.section.arm.x86asm",
-            "match": "\\.(text|data|bss|rodata|comment|tbss|init|fini|note|debug|thumb|thumb_func|code|code16|arm|arm_func)\\b"
-          }
-        ]
-      },
-      "instructions": {
-        "patterns": [
-          {
-            "name": "keyword.control.instruction.x86asm",
-            "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|add|sub|mul|div|and|or|xor|lea|cmp|test|inc|dec|shl|shr|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr)\\b"
-          },
-          {
-            "name": "keyword.control.instruction.att.x86asm",
-            "match": "\\b(movl|pushl|popl|call|ret|leave|jmp|je|jne|jz|jnz|addl|subl|mull|divl|andl|orl|xorl|leal|cmpl|testl|incl|decl|shll|shrl|nopl|enter|int|syscall|sysret|hlt|inl|outl|rdmsrl|wrmsrl)\\b"
-          },
-          {
-            "name": "keyword.control.instruction.arm.x86asm",
-            "match": "\\b(add|sub|mul|div|and|orr|eor|bic|mvn|mov|cmp|cmn|tst|teq|ldr|str|ldrb|strb|ldrh|strh|ldrsh|ldrsb|ldrd|strd|ldm|stm|push|pop|b|bl|bx|blx|swi|svc|nop|yield|wfe|wfi|sev|dbg|bkpt|clrex|dmb|dsb|isb|mcr|mrc|mrs|msr|ldc|stc|cdp|cdp2|mcr2|mrc2|mcrr|mcrr2|mrrc|mrrc2|swp|swpb|strex|ldrex|ldrexb|ldrexh|ldrexd|strexb|strexh|strexd|pld|pldw|pli|clz|rbit|rev|rev16|revsh|sel|qadd|qsub|qdadd|qdsub|smlabb|smlatb|smlabt|smlatt|smlawb|smulwb|smlal|smul|smull|smulw|smlalbb|smlalbt|smlaltb|smlaltt|smlalxy|smulxy|smlawy|smulwy|smulxy|smlsd|smlsld|smmla|smmlar|smmls|smmlsr|smmul|smmulr)\\b"
-          }
-        ]
-      },
-      "registers": {
-        "patterns": [
-          {
-            "name": "variable.language.register.x86asm",
-            "match": "\\b(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl|cr[0-4]|dr[0-7]|tr[3-6]|cs|ds|ss|es|fs|gs)\\b"
-          },
-          {
-            "name": "variable.language.register.att.x86asm",
-            "match": "\\b(%rax|%rbx|%rcx|%rdx|%rsi|%rdi|%rbp|%rsp|%r8|%r9|%r10|%r11|%r12|%r13|%r14|%r15|%eax|%ebx|%ecx|%edx|%esi|%edi|%ebp|%esp|%ax|%bx|%cx|%dx|%si|%di|%bp|%sp|%al|%bl|%cl|%dl|%cr[0-4]|%dr[0-7]|%tr[3-6]|%cs|%ds|%ss|%es|%fs|%gs)\\b"
-          },
-          {
-            "name": "variable.language.register.arm.x86asm",
-            "match": "\\b(r0|r1|r2|r3|r4|r5|r6|r7|r8|r9|r10|r11|r12|r13|r14|r15|sp|lr|pc|cpsr|spsr)\\b"
-          }
-        ]
-      },
-      "constants": {
-        "patterns": [
-          {
-            "name": "constant.numeric.hex.x86asm",
-            "match": "\\b(0x[0-9A-Fa-f]+)\\b"
-          },
-          {
-            "name": "constant.numeric.decimal.x86asm",
-            "match": "\\b([0-9]+)\\b"
-          }
-        ]
-      },
-      "strings": {
-        "name": "string.quoted.double.x86asm",
-        "begin": "\"",
-        "end": "\"",
-        "patterns": [
-          {
-            "name": "constant.character.escape.x86asm",
-            "match": "\\\\."
-          }
-        ]
-      },
-      "memory_operands": {
-        "patterns": [
-          {
-            "name": "storage.type.memory.x86asm",
-            "match": "\\b(BYTE|WORD|DWORD|QWORD|XMMWORD|YMMWORD|ZMMWORD)\\s+PTR\\b"
-          },
-          {
-            "name": "storage.type.memory.x86asm",
-            "match": "\\b(TBYTE|TWORD|DQWORD|OWORD|FWORD)\\b"
-          },
-          {
-            "name": "storage.type.memory.x86asm",
-            "match": "\\[([a-zA-Z0-9_+\\-*]+)\\]"
-          }
-        ]
-      }
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "x86/x64/ARM Assembly",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#constants" },
+    { "include": "#registers" },
+    { "include": "#instructions" },
+    { "include": "#directives" },
+    { "include": "#labels" },
+    { "include": "#sections" },
+    { "include": "#symbols" },
+    { "include": "#functions" },
+    { "include": "#memory_operands" },
+    { "include": "#jsdoc_comments" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.semicolon.x86asm",
+          "match": ";.*$"
+        },
+        {
+          "name": "comment.block.x86asm",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
     },
-    "scopeName": "source.x86asm"
-  }
-  
+    "jsdoc_comments": {
+      "patterns": [
+        {
+          "name": "comment.block.documentation.x86asm",
+          "begin": "/\\*\\*",
+          "end": "\\*/",
+          "patterns": [
+            {
+              "name": "entity.name.tag.jsdoc.x86asm",
+              "match": "@\\w+"
+            },
+            {
+              "name": "entity.name.type.jsdoc.x86asm",
+              "match": "\\{\\s*\\w+\\s*\\}"
+            }
+          ]
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.define.x86asm",
+          "match": "%define\\b"
+        },
+        {
+          "name": "keyword.control.directive.assign.x86asm",
+          "match": "%assign\\b"
+        },
+        {
+          "name": "keyword.control.directive.equ.x86asm",
+          "match": "\\bequ\\b"
+        },
+        {
+          "name": "keyword.control.directive.x86asm",
+          "match": "\\.(file|section|text|data|bss|tbss|tcomm|comm|cfi_[a-zA-Z_]+|gcc_except_table|ctors)\\b"
+        }
+      ]
+    },
+    "labels": {
+      "patterns": [
+        {
+          "name": "entity.name.function.label.x86asm",
+          "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
+        },
+        {
+          "name": "entity.name.tag.label.x86asm",
+          "match": "^L[a-zA-Z0-9_]+:"
+        },
+        {
+          "name": "entity.name.label.special.x86asm",
+          "match": "^[._][a-zA-Z_][a-zA-Z0-9_]*:"
+        }
+      ]
+    },
+    "sections": {
+      "patterns": [
+        {
+          "name": "entity.name.section.x86asm",
+          "match": "\\.(text|data|bss|rdata|rodata|comment|tbss|init|fini|note|debug|cfi_[a-zA-Z_]+)\\b"
+        }
+      ]
+    },
+    "instructions": {
+      "patterns": [
+        {
+          "name": "keyword.control.instruction.x86asm",
+          "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|add|sub|mul|div|and|or|xor|lea|cmp|test|inc|dec|shl|shr|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr)\\b"
+        }
+      ]
+    },
+    "registers": {
+      "patterns": [
+        {
+          "name": "variable.language.register.x86asm",
+          "match": "\\b(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl|cr[0-4]|dr[0-7]|tr[3-6]|cs|ds|ss|es|fs|gs)\\b"
+        }
+      ]
+    },
+    "constants": {
+      "patterns": [
+        {
+          "name": "constant.numeric.hex.x86asm",
+          "match": "\\b(0x[0-9A-Fa-f]+)\\b"
+        },
+        {
+          "name": "constant.numeric.decimal.x86asm",
+          "match": "\\b([0-9]+)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.x86asm",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.x86asm",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "memory_operands": {
+      "patterns": [
+        {
+          "name": "storage.type.memory.x86asm",
+          "match": "\\b(BYTE|WORD|DWORD|QWORD|XMMWORD|YMMWORD|ZMMWORD)\\s+PTR\\b"
+        },
+        {
+          "name": "storage.type.memory.x86asm",
+          "match": "\\b(TBYTE|TWORD|DQWORD|OWORD|FWORD)\\b"
+        },
+        {
+          "name": "storage.type.memory.bracketed.x86asm",
+          "match": "\\[(.*?)\\]",
+          "captures": {
+            "1": { "name": "entity.name.memory_operand.inside_brackets.x86asm" }
+          }
+        }
+      ]
+    },
+    "symbols": {
+      "patterns": [
+        {
+          "name": "entity.name.function.x86asm",
+          "match": "\\b(__Unwind_Resume|_main|LLSDA1445|_atexit|__GLOBAL__sub_I_main|\\.gcc_except_table|\\.ctors)\\b"
+        }
+      ]
+    },
+    // Added structure handling
+    "structure": {
+      "patterns": [
+        {
+          "name": "entity.name.structure.x86asm",
+          "match": "\\bSTRUC\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\b"
+        },
+        {
+          "name": "variable.parameter.structure_member.x86asm",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s+OFFSET\\s*\\b"
+        },
+        {
+          "name": "constant.numeric.size.x86asm",
+          "match": "\\b([0-9]+)\\s*:\\s*([0-9]+)\\b" // Match size offsets
+        }
+      ]
+    }
+  },
+  "scopeName": "source.x86asm"
+}

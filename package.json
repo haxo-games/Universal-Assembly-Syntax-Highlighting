@@ -1,7 +1,7 @@
 {
-  "name": "x86-assembly-syntax",
-  "displayName": "x86-x64 Assembly Syntax Highlighting",
-  "description": "Syntax highlighting extension for x86 and x64 assembly for Intel syntax",
+  "name": "universal-assembly-syntax",
+  "displayName": "Universal Assembly Syntax Highlighting",
+  "description": "Syntax highlighting extension for x86, x64 and ARM assembly both for Intel and AT&T syntax",
   "version": "1.0.4",
   "engines": {
     "vscode": "^1.60.0"
@@ -9,18 +9,35 @@
   "categories": [
     "Programming Languages"
   ],
+  "main": "./src/extension.js",
   "contributes": {
-    "languages": [{
-      "id": "x86asm",
-      "aliases": ["x86-x64 Assembly", "x86/x64 Assembly", "x86/x64", "x86-x64", "x86asm"],
-      "extensions": [".asm", ".s", ".S", ".nasm"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "x86asm",
-      "scopeName": "source.x86asm",
-      "path": "./syntaxes/x86asm.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "x86asm",
+        "aliases": [
+          "x86-x64 Assembly",
+          "x86/x64 Assembly",
+          "x86/x64",
+          "x86-x64",
+          "arm",
+          "x86asm"
+        ],
+        "extensions": [
+          ".asm",
+          ".s",
+          ".S",
+          ".nasm"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "x86asm",
+        "scopeName": "source.x86asm",
+        "path": "./syntaxes/x86asm.tmLanguage.json"
+      }
+    ]
   },
   "repository": {
     "type": "git",
@@ -32,10 +49,10 @@
     "url": "https://github.com/haxo-games/x86-x64-syntax-highlighting/issues"
   },
   "keywords": [
-    "x86-x64 Assembly", 
-    "x86/x64 Assembly", 
-    "x86/x64", 
-    "x86-x64", 
+    "x86-x64 Assembly",
+    "x86/x64 Assembly",
+    "x86/x64",
+    "x86-x64",
     "x86asm",
     "asm",
     "assembly",
@@ -45,5 +62,10 @@
     "syntax",
     "highlighting"
   ],
-  "homepage": "https://github.com/haxo-games/x86-x64-syntax-highlighting#readme"
+  "homepage": "https://github.com/haxo-games/x86-x64-syntax-highlighting#readme",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "vscode": "^1.1.34"
+  }
 }

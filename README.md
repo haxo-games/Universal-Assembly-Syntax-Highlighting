@@ -17,7 +17,7 @@ This Visual Studio Code extension provides comprehensive syntax highlighting for
 
 1. Open Visual Studio Code
 2. Go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X on macOS)
-3. Search for "x86-x64 Assembly Syntax Highlighting"
+3. Search for "Universal Assembly Syntax Highlighting"
 4. Click Install
 
 ## Usage 💡
