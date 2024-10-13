@@ -13,7 +13,8 @@
     { "include": "#symbols" },
     { "include": "#functions" },
     { "include": "#memory_operands" },
-    { "include": "#jsdoc_comments" }
+    { "include": "#structure" },
+    { "include": "#macros" }
   ],
   "repository": {
     "comments": {
@@ -26,25 +27,6 @@
           "name": "comment.block.x86asm",
           "begin": "/\\*",
           "end": "\\*/"
-        }
-      ]
-    },
-    "jsdoc_comments": {
-      "patterns": [
-        {
-          "name": "comment.block.documentation.x86asm",
-          "begin": "/\\*\\*",
-          "end": "\\*/",
-          "patterns": [
-            {
-              "name": "entity.name.tag.jsdoc.x86asm",
-              "match": "@\\w+"
-            },
-            {
-              "name": "entity.name.type.jsdoc.x86asm",
-              "match": "\\{\\s*\\w+\\s*\\}"
-            }
-          ]
         }
       ]
     },
@@ -64,7 +46,71 @@
         },
         {
           "name": "keyword.control.directive.x86asm",
-          "match": "\\.(file|section|text|data|bss|tbss|tcomm|comm|cfi_[a-zA-Z_]+|gcc_except_table|ctors)\\b"
+          "match": "\\.(file|section|text|data|bss|tbss|tcomm|comm|cfi_[a-zA-Z_]+|gcc_except_table|ctors|ascii|lcomm|byte|ident|align|rdata|rodata|comment|tbss|init|fini|note|debug|intel_syntax)\\b"
+        },
+        {
+          "name": "keyword.control.directive.offset.x86asm",
+          "match": "\\bOFFSET\\b"
+        },
+        {
+          "name": "keyword.control.directive.uleb128.x86asm",
+          "match": "\\.uleb128\\b"
+        },
+        {
+          "name": "keyword.control.directive.def.x86asm",
+          "match": "\\.def\\b"
+        },
+        {
+          "name": "keyword.control.directive.long.x86asm",
+          "match": "\\.long\\b"
+        },
+        {
+          "name": "keyword.control.directive.scl.x86asm",
+          "match": "\\.scl\\b"
+        },
+        {
+          "name": "keyword.control.directive.type.x86asm",
+          "match": "\\.type\\b"
+        },
+        {
+          "name": "keyword.control.directive.endef.x86asm",
+          "match": "\\.endef\\b"
+        },
+        {
+          "name": "keyword.control.directive.globl.x86asm",
+          "match": "\\.globl\\b"
+        },
+        {
+          "name": "keyword.control.directive.space.x86asm",
+          "match": "\\.space\\b"
+        },
+        {
+          "name": "keyword.control.directive.intel_syntax.x86asm",
+          "match": "\\.intel_syntax\\b"
+        },
+        {
+          "name": "keyword.control.directive.extern.x86asm",
+          "match": "\\.extern\\b"
+        },
+        {
+          "name": "keyword.control.directive.global.x86asm",
+          "match": "\\.global\\b"
+        },
+        {
+          "name": "keyword.control.directive.weak.x86asm",
+          "match": "\\.weak\\b"
+        },
+        {
+          "name": "keyword.control.directive.hidden.x86asm",
+          "match": "\\.hidden\\b"
+        },
+        {
+          "name": "keyword.control.directive.protected.x86asm",
+          "match": "\\.protected\\b"
+        },
+        {
+          "name": "keyword.control.directive.internal.x86asm",
+          "match": "\\.internal\\b"
         }
       ]
     },
@@ -154,11 +200,14 @@
       "patterns": [
         {
           "name": "entity.name.function.x86asm",
-          "match": "\\b(__Unwind_Resume|_main|LLSDA1445|_atexit|__GLOBAL__sub_I_main|\\.gcc_except_table|\\.ctors)\\b"
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*|__[a-zA-Z0-9_]+)\\b"
+        },
+        {
+          "name": "entity.name.label.x86asm",
+          "match": "\\b(L[a-zA-Z0-9_]+|FLAT:[a-zA-Z_][a-zA-Z0-9_]*)\\b"
         }
       ]
     },
-    // Added structure handling
     "structure": {
       "patterns": [
         {
@@ -171,7 +220,46 @@
         },
         {
           "name": "constant.numeric.size.x86asm",
-          "match": "\\b([0-9]+)\\s*:\\s*([0-9]+)\\b" // Match size offsets
+          "match": "\\b([0-9]+)\\s*:\\s*([0-9]+)\\b"
+        }
+      ]
+    },
+    "directive_definitions": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.def.x86asm",
+          "begin": "\\.def\\s+",
+          "end": ";",
+          "patterns": [
+            {
+              "name": "entity.name.function.x86asm",
+              "match": "([a-zA-Z_][a-zA-Z0-9_]*)"
+            },
+            {
+              "name": "keyword.control.directive.scl.x86asm",
+              "match": "\\.scl\\s+([0-9]+)"
+            },
+            {
+              "name": "keyword.control.directive.type.x86asm",
+              "match": "\\.type\\s+([0-9]+)"
+            },
+            {
+              "name": "keyword.control.directive.endef.x86asm",
+              "match": "\\.endef"
+            }
+          ]
+        }
+      ]
+    },
+    "macros": {
+      "patterns": [
+        {
+          "name": "keyword.control.macro.x86asm",
+          "match": "\\b(macro|endm)\\b"
+        },
+        {
+          "name": "entity.name.macro.x86asm",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s+macro\\b"
         }
       ]
     }

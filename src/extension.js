@@ -76,7 +76,6 @@ async function fetchInstructionInfo(instruction) {
     }
 }
 
-
 function findDefinition(document, word) {
     const text = document.getText();
     const lines = text.split('\n');
@@ -89,10 +88,18 @@ function findDefinition(document, word) {
         }
     }
 
-    // Look for label (e.g., `function:` or `L123:`)
-    const labelRegex = new RegExp(`^${word}:`, 'i');
+    // Look for label
+    const labelRegex = new RegExp(`^(${word}|FLAT:${word}):`, 'i');
     for (let i = 0; i < lines.length; i++) {
         if (labelRegex.test(lines[i])) {
+            return new vscode.Location(document.uri, new vscode.Position(i, 0));
+        }
+    }
+
+    // Look for lcomm directive
+    const lcommRegex = new RegExp(`\\.lcomm\\s+${word}`, 'i');
+    for (let i = 0; i < lines.length; i++) {
+        if (lcommRegex.test(lines[i])) {
             return new vscode.Location(document.uri, new vscode.Position(i, 0));
         }
     }

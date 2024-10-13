@@ -2,7 +2,7 @@
   "name": "universal-assembly-syntax",
   "displayName": "Universal Assembly Syntax Highlighting",
   "description": "Syntax highlighting extension for x86, x64 and ARM assembly both for Intel and AT&T syntax",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -26,7 +26,9 @@
           ".asm",
           ".s",
           ".S",
-          ".nasm"
+          ".nasm",
+          ".asmx",
+          ".inc"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -35,7 +37,7 @@
       {
         "language": "x86asm",
         "scopeName": "source.x86asm",
-        "path": "./syntaxes/x86asm.tmLanguage.json"
+        "path": "./syntaxes/asm.tmLanguage.json"
       }
     ]
   },
