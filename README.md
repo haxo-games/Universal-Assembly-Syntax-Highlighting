@@ -1,5 +1,3 @@
-Here’s the version with emojis:
-
 ## Overview 🛠️
 
 This Visual Studio Code extension provides comprehensive syntax highlighting for x86, x64 and ARM assembly language using Intel syntax. It's designed to improve readability and understanding of assembly code, including compiler-generated output.
