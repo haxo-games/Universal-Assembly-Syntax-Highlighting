@@ -125,16 +125,16 @@
     "labels": {
       "patterns": [
         {
+          "name": "entity.name.label.local.x86asm",
+          "match": "^\\.[a-zA-Z_][a-zA-Z0-9_]*:"
+        },
+        {
           "name": "entity.name.function.label.x86asm",
           "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
         },
         {
           "name": "entity.name.tag.label.x86asm",
           "match": "^L[a-zA-Z0-9_]+:"
-        },
-        {
-          "name": "entity.name.label.special.x86asm",
-          "match": "^[._][a-zA-Z_][a-zA-Z0-9_]*:"
         }
       ]
     },
@@ -175,13 +175,28 @@
       ]
     },
     "strings": {
-      "name": "string.quoted.double.x86asm",
-      "begin": "\"",
-      "end": "\"",
       "patterns": [
         {
-          "name": "constant.character.escape.x86asm",
-          "match": "\\\\."
+          "name": "string.quoted.double.x86asm",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.x86asm",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.x86asm",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.x86asm",
+              "match": "\\\\."
+            }
+          ]
         }
       ]
     },
