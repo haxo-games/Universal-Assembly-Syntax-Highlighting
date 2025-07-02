@@ -49,6 +49,8 @@ This extension provides syntax highlighting for:
 
 ## Customization 🎨
 
+### Syntax Highlighting Colors
+
 You can customize the colors used for syntax highlighting by modifying your VS Code color theme. Add or modify entries in your `settings.json` file under `"editor.tokenColorCustomizations"`.
 
 For example:
@@ -71,6 +73,25 @@ For example:
     ]
 }
 ```
+
+### Comment Characters
+
+You can configure which characters are used for comments to match your assembler. Add these settings to your VS Code `settings.json`:
+
+```json
+{
+  "assembly.comments.lineComment": "#",
+  "assembly.comments.blockComment": ["/*", "*/"]
+}
+```
+
+**Common configurations:**
+
+- **GNU Assembler (as)**: Use `#` for line comments
+- **NASM/MASM**: Use `;` for line comments (default)
+- **Custom assemblers**: Set to any character or string you prefer
+
+The extension will automatically update comment behavior when you change these settings.
 
 ## Contributing 🤝
 

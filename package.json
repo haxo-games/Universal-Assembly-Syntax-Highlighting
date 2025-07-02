@@ -2,18 +2,43 @@
   "name": "x86-assembly-syntax",
   "displayName": "Universal Assembly Syntax Highlighting",
   "description": "Syntax highlighting extension for x86, x64 and ARM assembly both for Intel and AT&T syntax",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.75.0"
   },
   "categories": [
     "Programming Languages"
   ],
   "main": "./src/extension.js",
-  "activationEvents": [
-    "onLanguage:x86asm"
-  ],
   "contributes": {
+    "configuration": {
+      "title": "Assembly Language",
+      "properties": {
+        "assembly.comments.lineComment": {
+          "type": "string",
+          "default": ";",
+          "description": "Character(s) used for line comments",
+          "examples": [
+            ";",
+            "#",
+            "//"
+          ]
+        },
+        "assembly.comments.blockComment": {
+          "type": "array",
+          "default": [
+            "/*",
+            "*/"
+          ],
+          "description": "Characters used for block comments [start, end]",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
     "languages": [
       {
         "id": "x86asm",
