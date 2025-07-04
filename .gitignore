@@ -1,2 +1,4 @@
 node_modules
 *.vsix
+/scrapper/discovered_mnemonics.txt
+/scrapper/mnemonic_url_mappings.txt

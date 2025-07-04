@@ -1,11 +1,14 @@
 const vscode = require("vscode");
-const axios = require("axios");
-const cheerio = require("cheerio");
-const list = require("./mnemonics.js");
+const fs = require("fs");
+const path = require("path");
 
 let languageConfigDisposable = null;
+let instructionData = null;
 
 function activate(context) {
+  // Load instruction data from local JSON file
+  loadInstructionData();
+
   // Set up initial language configuration
   updateLanguageConfiguration();
 
@@ -20,24 +23,18 @@ function activate(context) {
 
   // Hover provider for mnemonics
   const hoverProvider = vscode.languages.registerHoverProvider("x86asm", {
-    async provideHover(document, position, token) {
+    provideHover(document, position, token) {
       const range = document.getWordRangeAtPosition(
         position,
         /\b[a-zA-Z0-9_]+\b/
       );
       const word = document.getText(range);
 
-      if (word) {
-        // Check if the word is a valid mnemonic
-        if (list.x86x64Mnemonics.includes(word.toUpperCase())) {
-          const instructionInfo = await fetchInstructionInfo(
-            word.toLowerCase()
-          );
-          if (instructionInfo) {
-            return new vscode.Hover(instructionInfo);
-          }
-        } else {
-          return undefined;
+      if (word && instructionData) {
+        // Check if the word is a valid mnemonic by looking it up in the instruction data
+        const instructionInfo = getInstructionInfo(word.toLowerCase());
+        if (instructionInfo) {
+          return new vscode.Hover(instructionInfo);
         }
       }
 
@@ -66,6 +63,38 @@ function activate(context) {
     definitionProvider,
     configChangeListener
   );
+}
+
+function loadInstructionData() {
+  try {
+    const dataPath = path.join(
+      __dirname,
+      "..",
+      "syntaxes",
+      "x86_instructions.json"
+    );
+    if (fs.existsSync(dataPath)) {
+      const rawData = fs.readFileSync(dataPath, "utf8");
+      instructionData = JSON.parse(rawData);
+      console.log(
+        `Loaded ${
+          Object.keys(instructionData).length
+        } instructions from syntaxes database`
+      );
+    } else {
+      console.warn(
+        "syntaxes/x86_instructions.json not found. Please run the scraper.py script first."
+      );
+      vscode.window.showWarningMessage(
+        "syntaxes/x86_instructions.json not found. Please run the scraper.py script to generate the instruction database."
+      );
+    }
+  } catch (error) {
+    console.error("Error loading instruction data:", error);
+    vscode.window.showErrorMessage(
+      "Error loading instruction database: " + error.message
+    );
+  }
 }
 
 function updateLanguageConfiguration() {
@@ -116,47 +145,35 @@ function updateLanguageConfiguration() {
   );
 }
 
-async function fetchInstructionInfo(instruction) {
-  try {
-    const url = `https://www.felixcloutier.com/x86/${instruction}`;
-    const response = await axios.get(url);
-    const $ = cheerio.load(response.data);
-
-    // Extract the title (instruction name)
-    const instructionTitle = $("h1").text();
-
-    // Extract Opcode table and relevant details
-    const opcodeTable = $("table").first();
-    const opcode = opcodeTable.find("tr").eq(1).find("td").eq(0).text();
-    const instructionDescription = opcodeTable
-      .find("tr")
-      .eq(1)
-      .find("td")
-      .eq(5)
-      .text();
-
-    // Extract the operation section
-    const operationSection = $("#operation").next("pre").text();
-
-    // Extract the description section
-    const descriptionSection = $("#description").nextUntil("h2", "p").text();
-
-    // Combine the extracted information into a formatted output
-    let hoverContent = `**${instructionTitle}**\n\n`;
-    hoverContent += `**Opcode:** ${opcode}\n`;
-    hoverContent += `**Description:** ${instructionDescription}\n\n`;
-    hoverContent += `**Details:**\n${descriptionSection}\n\n`;
-    hoverContent += `**Operation:**\n${operationSection}`;
-
-    return hoverContent;
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      console.warn(`Instruction info not found for: ${instruction}`);
-    } else {
-      console.error(`Failed to fetch instruction info: ${error.message}`);
-    }
-    return null; // Return null if fetching fails
+function getInstructionInfo(instruction) {
+  if (!instructionData) {
+    return null;
   }
+
+  const info = instructionData[instruction.toLowerCase()];
+  if (!info) {
+    return null;
+  }
+
+  // Format the hover content using the syntaxes/x86_instructions.json format
+  // Keep title as is since it usually doesn't need paragraph breaks
+  let hoverContent = `**${info.title}**\n\n`;
+
+  if (info.opcode) {
+    hoverContent += `**Opcode:** ${info.opcode}\n\n`;
+  }
+
+  if (info.description) {
+    // Replace single \n with double \n for proper markdown paragraph breaks
+    const formattedDescription = info.description.replace(/\n/g, "\n\n");
+    hoverContent += `**Description:** ${formattedDescription}\n\n`;
+  }
+
+  if (info.url) {
+    hoverContent += `[View Documentation](${info.url})`;
+  }
+
+  return hoverContent;
 }
 
 async function findDefinition(word) {

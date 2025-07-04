@@ -2,7 +2,7 @@
   "name": "x86-assembly-syntax",
   "displayName": "Universal Assembly Syntax Highlighting",
   "description": "Syntax highlighting extension for x86, x64 and ARM assembly both for Intel and AT&T syntax",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "engines": {
     "vscode": "^1.75.0"
   },
@@ -93,10 +93,6 @@
     "highlighting"
   ],
   "homepage": "https://github.com/haxo-games/x86-x64-syntax-highlighting#readme",
-  "dependencies": {
-    "axios": "^1.7.7",
-    "cheerio": "^1.0.0"
-  },
   "devDependencies": {
     "vscode": "^1.1.34"
   }
