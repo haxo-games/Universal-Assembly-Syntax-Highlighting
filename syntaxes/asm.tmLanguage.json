@@ -10,9 +10,10 @@
     { "include": "#directives" },
     { "include": "#labels" },
     { "include": "#sections" },
+    { "include": "#memory_operands" },
+    { "include": "#operators" },
     { "include": "#symbols" },
     { "include": "#functions" },
-    { "include": "#memory_operands" },
     { "include": "#structure" },
     { "include": "#macros" }
   ],
@@ -126,15 +127,15 @@
       "patterns": [
         {
           "name": "entity.name.label.local.x86asm",
-          "match": "^\\.[a-zA-Z_][a-zA-Z0-9_]*:"
+          "match": "^\\s*\\.[a-zA-Z_][a-zA-Z0-9_]*:"
         },
         {
           "name": "entity.name.function.label.x86asm",
-          "match": "^[a-zA-Z_][a-zA-Z0-9_]*:"
+          "match": "^\\s*[a-zA-Z_][a-zA-Z0-9_]*:"
         },
         {
           "name": "entity.name.tag.label.x86asm",
-          "match": "^L[a-zA-Z0-9_]+:"
+          "match": "^\\s*L[a-zA-Z0-9_]+:"
         }
       ]
     },
@@ -150,7 +151,7 @@
       "patterns": [
         {
           "name": "keyword.control.instruction.x86asm",
-          "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|add|sub|mul|div|and|or|xor|lea|cmp|test|inc|dec|shl|shr|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr)\\b"
+          "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|jbe|jae|ja|jb|jge|jg|jl|jle|jo|jno|js|jns|jc|jnc|jp|jnp|add|sub|mul|div|imul|idiv|and|or|xor|xchg|lea|cmp|test|inc|dec|shl|shr|sal|sar|rol|ror|rcl|rcr|movzx|movsx|movsxd|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr|cbw|cwd|cdq|cqo|rep|repe|repz|repne|repnz|loop|loope|loopz|loopne|loopnz|clc|stc|cli|sti|cld|std|lahf|sahf|pushf|popf|pusha|popa|pushad|popad)\\b"
         }
       ]
     },
@@ -189,6 +190,10 @@
         },
         {
           "name": "string.quoted.single.x86asm",
+          "match": "'([^'\\\\]|\\\\.)*'"
+        },
+        {
+          "name": "string.quoted.single.x86asm",
           "begin": "'",
           "end": "'",
           "patterns": [
@@ -203,19 +208,54 @@
     "memory_operands": {
       "patterns": [
         {
-          "name": "storage.type.memory.x86asm",
+          "name": "support.type.memory.size.x86asm",
           "match": "\\b(BYTE|WORD|DWORD|QWORD|XMMWORD|YMMWORD|ZMMWORD)\\s+PTR\\b"
         },
         {
-          "name": "storage.type.memory.x86asm",
+          "name": "support.type.memory.size.x86asm",
           "match": "\\b(TBYTE|TWORD|DQWORD|OWORD|FWORD)\\b"
         },
         {
-          "name": "storage.type.memory.bracketed.x86asm",
-          "match": "\\[(.*?)\\]",
-          "captures": {
-            "1": { "name": "entity.name.memory_operand.inside_brackets.x86asm" }
-          }
+          "name": "support.type.memory.size.x86asm",
+          "match": "\\b(byte|word|dword|qword|xmmword|ymmword|zmmword|tbyte|tword|dqword|oword|fword)\\b"
+        },
+        {
+          "name": "punctuation.definition.bracket.square.begin.x86asm",
+          "match": "\\[",
+          "push": [
+            {
+              "name": "punctuation.definition.bracket.square.end.x86asm",
+              "match": "\\]",
+              "pop": true
+            },
+            { "include": "#registers" },
+            { "include": "#operators" },
+            { "include": "#constants" },
+            {
+              "name": "entity.name.memory_operand.inside_brackets.x86asm",
+              "match": "[^\\]]+"
+            }
+          ]
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.x86asm",
+          "match": "[+\\-*/%]"
+        },
+        {
+          "name": "keyword.operator.logical.x86asm",
+          "match": "[&|^~]"
+        },
+        {
+          "name": "keyword.operator.comparison.x86asm",
+          "match": "[<>=!]"
+        },
+        {
+          "name": "punctuation.separator.comma.x86asm",
+          "match": ","
         }
       ]
     },
