@@ -2,7 +2,7 @@
   "name": "x86-assembly-syntax",
   "displayName": "Universal Assembly Syntax Highlighting",
   "description": "Syntax highlighting extension for x86, x64 and ARM assembly both for Intel and AT&T syntax",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "engines": {
     "vscode": "^1.75.0"
   },

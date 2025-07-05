@@ -8,6 +8,7 @@
     { "include": "#registers" },
     { "include": "#instructions" },
     { "include": "#directives" },
+    { "include": "#data_labels" },
     { "include": "#labels" },
     { "include": "#sections" },
     { "include": "#memory_operands" },
@@ -123,10 +124,22 @@
         }
       ]
     },
+    "data_labels": {
+      "patterns": [
+        {
+          "name": "markup.deleted.data.label.x86asm",
+          "match": "^\\s*([a-zA-Z_][a-zA-Z0-9_]*):(?=\\s*(resb|resw|resd|resq|db|dw|dd|dq|times))"
+        },
+        {
+          "name": "markup.deleted.data.label.x86asm",
+          "match": "\\b(list\\d*\\w*|\\w*Size|\\w*size)\\b"
+        }
+      ]
+    },
     "labels": {
       "patterns": [
         {
-          "name": "entity.name.label.local.x86asm",
+          "name": "entity.name.function.label.x86asm",
           "match": "^\\s*\\.[a-zA-Z_][a-zA-Z0-9_]*:"
         },
         {
@@ -142,8 +155,12 @@
     "sections": {
       "patterns": [
         {
-          "name": "entity.name.section.x86asm",
+          "name": "keyword.control.section.x86asm",
           "match": "\\.(section .(text|data|bss|tbss|tcomm))\\b"
+        },
+        {
+          "name": "keyword.control.section.x86asm",
+          "match": "\\.(text|data|bss|tbss|tcomm|rodata)\\b"
         }
       ]
     },
