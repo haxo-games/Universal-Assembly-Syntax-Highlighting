@@ -47,6 +47,10 @@
           "match": "\\bequ\\b"
         },
         {
+          "name": "keyword.control.directive.nasm.x86asm",
+          "match": "%(if|ifdef|ifndef|else|elif|endif|include|macro|endmacro|rep|endrep|exitrep|rotate|push|pop|local|undef|strlen|substr|arg|stacksize|use16|use32|use64)\\b"
+        },
+        {
           "name": "keyword.control.directive.x86asm",
           "match": "\\.(file|cfi_[a-zA-Z_]+|gcc_except_table|ctors|ascii|lcomm|byte|ident|align|rdata|rodata|comment|tbss|init|fini|note|debug|intel_syntax)\\b"
         },
@@ -168,15 +172,35 @@
       "patterns": [
         {
           "name": "keyword.control.instruction.x86asm",
-          "match": "\\b(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|jbe|jae|ja|jb|jge|jg|jl|jle|jo|jno|js|jns|jc|jnc|jp|jnp|add|sub|mul|div|imul|idiv|and|or|xor|xchg|lea|cmp|test|inc|dec|shl|shr|sal|sar|rol|ror|rcl|rcr|movzx|movsx|movsxd|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr|cbw|cwd|cdq|cqo|rep|repe|repz|repne|repnz|loop|loope|loopz|loopne|loopnz|clc|stc|cli|sti|cld|std|lahf|sahf|pushf|popf|pusha|popa|pushad|popad)\\b"
+          "match": "\\b(?i)(mov|push|pop|call|ret|leave|jmp|je|jne|jz|jnz|jbe|jae|ja|jb|jge|jg|jl|jle|jo|jno|js|jns|jc|jnc|jp|jnp|add|sub|mul|div|imul|idiv|and|or|xor|xchg|lea|cmp|test|inc|dec|shl|shr|sal|sar|rol|ror|rcl|rcr|movzx|movsx|movsxd|nop|enter|int|syscall|sysret|hlt|in|out|rdmsr|wrmsr|cbw|cwd|cdq|cqo|rep|repe|repz|repne|repnz|loop|loope|loopz|loopne|loopnz|clc|stc|cli|sti|cld|std|lahf|sahf|pushf|popf|pusha|popa|pushad|popad)\\b"
+        },
+        {
+          "name": "keyword.control.instruction.sse.x86asm",
+          "match": "\\b(?i)(movq|movd|movdqa|movdqu|movaps|movups|movapd|movupd|movss|movsd|movhps|movlps|movhpd|movlpd|xorps|xorpd|andps|andpd|orps|orpd|addps|addpd|addss|addsd|subps|subpd|subss|subsd|mulps|mulpd|mulss|mulsd|divps|divpd|divss|divsd|maxps|maxpd|maxss|maxsd|minps|minpd|minss|minsd|cmpps|cmppd|cmpss|cmpsd|comiss|comisd|ucomiss|ucomisd|cvtps2pd|cvtpd2ps|cvtps2dq|cvtpd2dq|cvtdq2ps|cvtdq2pd|cvtss2sd|cvtsd2ss|cvtss2si|cvtsd2si|cvttss2si|cvttsd2si|cvtsi2ss|cvtsi2sd)\\b"
+        },
+        {
+          "name": "keyword.control.instruction.avx.x86asm",
+          "match": "\\b(?i)(vzeroupper|vzeroall|vmovdqa|vmovdqu|vmovaps|vmovups|vmovapd|vmovupd|vaddps|vaddpd|vaddss|vaddsd|vsubps|vsubpd|vsubss|vsubsd|vmulps|vmulpd|vmulss|vmulsd|vdivps|vdivpd|vdivss|vdivsd|vxorps|vxorpd|vandps|vandpd|vorps|vorpd|vcmpps|vcmppd|vcmpss|vcmpsd|vbroadcastss|vbroadcastsd|vinsertf128|vextractf128|vperm2f128|vblendps|vblendpd|vshufps|vshufpd)\\b"
         }
       ]
     },
     "registers": {
       "patterns": [
         {
+          "name": "variable.language.register.simd.x86asm",
+          "match": "\\b(?i)(xmm(?:[0-9]|1[0-5])|ymm(?:[0-9]|[12][0-9]|3[01])|zmm(?:[0-9]|[12][0-9]|3[01]))\\b"
+        },
+        {
+          "name": "variable.language.register.mask.x86asm",
+          "match": "\\b(?i)k[0-7]\\b"
+        },
+        {
+          "name": "variable.language.register.tile.x86asm",
+          "match": "\\b(?i)tmm[0-7]\\b"
+        },
+        {
           "name": "variable.language.register.x86asm",
-          "match": "\\b(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl|cr[0-4]|dr[0-7]|tr[3-6]|cs|ds|ss|es|fs|gs)\\b"
+          "match": "\\b(?i)(rax|rbx|rcx|rdx|rsi|rdi|rbp|rsp|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esi|edi|ebp|esp|ax|bx|cx|dx|si|di|bp|sp|al|bl|cl|dl|spl|bpl|sil|dil|ah|bh|ch|dh|eip|rip|eflags|rflags|cr[0-4]|dr[0-7]|tr[3-6]|cs|ds|ss|es|fs|gs)\\b"
         }
       ]
     },
